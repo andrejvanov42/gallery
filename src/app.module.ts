@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import {ConfigModule, ConfigService} from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { UsersModule } from './users/users.module';
+
 
 @Module({
   imports: [
@@ -16,11 +18,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         password: configService.get<string>('TYPEORM_PASSWORD'),
         database: configService.get<string>('TYPEORM_DATABASE'),
         entities: [__dirname + '/dist/**/*.entity{.ts,.js}'],
+        synchronize: true,
         autoLoadEntities: true,
         logging: true
       })
-    })
-  ],
+    }),
+    UsersModule
+  ], 
   providers: [],
+  controllers: []
 })
 export class AppModule {}
