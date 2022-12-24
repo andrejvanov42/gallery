@@ -7,31 +7,28 @@ import { UserEntity } from './user.entity';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
+  ) {}
+  async createUser(userDto: CreateUserDto): Promise<UserEntity> {
+    return this.userRepository.save({ ...userDto });
+  }
 
-    constructor(
-        @InjectRepository(UserEntity)
-        private readonly userRepository: Repository<UserEntity>
-    ) {
+  async getOneUser(id: number): Promise<UserEntity> {
+    return this.userRepository.findOneBy({ id: id });
+  }
+  async getAllUsers(): Promise<UserEntity[]> {
+    return this.userRepository.find();
+  }
 
-    }
-    async createUser(userDto: CreateUserDto): Promise<UserEntity> {
-        return this.userRepository.save({...userDto})
-    }
+  async removeUser(id: number): Promise<number> {
+    await this.userRepository.delete(id);
+    return id;
+  }
 
-    async getOneUser(id: number): Promise<UserEntity> {
-        return this.userRepository.findOneBy({id: id})
-    }
-    async getAllUsers(): Promise<UserEntity[]> {
-        return this.userRepository.find()
-    }
-
-    async removeUser(id: number): Promise<number> {
-        await this.userRepository.delete({id})
-        return id
-    }
-
-    async updateUser( userDto: UpdateUserDto ): Promise<UserEntity> {
-        await this.userRepository.update({id: userDto.id}, {...userDto}) 
-        return this.getOneUser(userDto.id)
-    }
+  async updateUser(userDto: UpdateUserDto): Promise<UserEntity> {
+    await this.userRepository.update({ id: userDto.id }, { ...userDto });
+    return this.getOneUser(userDto.id);
+  }
 }
