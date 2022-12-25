@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
+import { UserRoleEntity } from './roles/user-roles.entity';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { RolesModule } from './roles/roles.module';
     }),
     UsersModule,
     RolesModule,
+    UserRoleEntity,
   ],
   providers: [],
   controllers: [],
