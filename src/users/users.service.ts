@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RoleEntity } from 'src/roles/roles.entity';
 import { RolesService } from 'src/roles/roles.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -15,16 +14,22 @@ export class UsersService {
     private roleService: RolesService,
   ) {}
   async createUser(userDto: CreateUserDto): Promise<UserEntity> {
-    const user = await this.userRepository.save(userDto);
+    const user = await this.userRepository.create(userDto);
     const role = await this.roleService.getRoleByValue('user');
-    return user;
+    await this.roleService.addUserRole(user, role);
+    return this.userRepository.save(user);
   }
 
   async getOneUser(id: number): Promise<UserEntity> {
     return this.userRepository.findOneBy({ id: id });
   }
+
   async getAllUsers(): Promise<UserEntity[]> {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      relations: {
+        userRoles: true,
+      },
+    });
   }
 
   async removeUser(id: number): Promise<number> {

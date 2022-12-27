@@ -3,9 +3,11 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToMany,
   JoinColumn,
+  JoinTable,
+  OneToMany,
 } from 'typeorm';
+import { UserRoleEntity } from './user-roles.entity';
 
 @Entity('roles')
 export class RoleEntity {
@@ -18,7 +20,6 @@ export class RoleEntity {
   @Column()
   description: string;
 
-  @ManyToMany(() => UserEntity)
-  @JoinColumn()
-  user: UserEntity[];
+  @OneToMany(() => UserRoleEntity, (userRole: UserRoleEntity) => userRole.role)
+  roleUsers: UserRoleEntity[];
 }
