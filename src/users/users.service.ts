@@ -15,9 +15,10 @@ export class UsersService {
   ) {}
   async createUser(userDto: CreateUserDto): Promise<UserEntity> {
     const user = await this.userRepository.create(userDto);
+    await this.userRepository.save(user);
     const role = await this.roleService.getRoleByValue('user');
     await this.roleService.addUserRole(user, role);
-    return this.userRepository.save(user);
+    return user;
   }
 
   async getOneUser(id: number): Promise<UserEntity> {
@@ -40,5 +41,12 @@ export class UsersService {
   async updateUser(userDto: UpdateUserDto): Promise<UserEntity> {
     await this.userRepository.update({ id: userDto.id }, { ...userDto });
     return this.getOneUser(userDto.id);
+  }
+
+  async getUserByEmail(email: string) {
+    const user = await this.userRepository.findOne({
+      where: { email: email },
+    });
+    return user;
   }
 }

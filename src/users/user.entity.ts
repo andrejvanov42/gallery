@@ -1,12 +1,18 @@
 import { UserRoleEntity } from 'src/roles/user-roles.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  PrimaryColumn,
+} from 'typeorm';
 
 @Entity('users')
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()

@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { UserRoleEntity } from './roles/user-roles.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { UserRoleEntity } from './roles/user-roles.entity';
         password: configService.get<string>('TYPEORM_PASSWORD'),
         database: configService.get<string>('TYPEORM_DATABASE'),
         entities: [__dirname + '/dist/**/*.entity{.ts,.js}'],
-        synchronize: true,
+        synchronize: false,
         autoLoadEntities: true,
         logging: true,
       }),
@@ -27,6 +28,7 @@ import { UserRoleEntity } from './roles/user-roles.entity';
     UsersModule,
     RolesModule,
     UserRoleEntity,
+    AuthModule,
   ],
   providers: [],
   controllers: [],
