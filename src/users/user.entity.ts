@@ -1,11 +1,5 @@
 import { UserRoleEntity } from 'src/roles/user-roles.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  PrimaryColumn,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity('users')
 export class UserEntity {

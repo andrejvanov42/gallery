@@ -14,9 +14,9 @@ export class UsersService {
     private roleService: RolesService,
   ) {}
   async createUser(userDto: CreateUserDto): Promise<UserEntity> {
+    const role = await this.roleService.getRoleByValue('user');
     const user = await this.userRepository.create(userDto);
     await this.userRepository.save(user);
-    const role = await this.roleService.getRoleByValue('user');
     await this.roleService.addUserRole(user, role);
     return user;
   }

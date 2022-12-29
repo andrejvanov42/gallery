@@ -37,4 +37,13 @@ export class RolesService {
 
     return userRole;
   }
+
+  async getUserRole(userId: number): Promise<{ roleName: string }[]> {
+    const id = await this.usersRolesRepository
+      .createQueryBuilder()
+      .select('user_roles')
+      .where('user_roles.userId =:userId', { userId: userId })
+      .getRawOne();
+    return id;
+  }
 }
