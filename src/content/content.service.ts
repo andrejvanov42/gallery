@@ -17,13 +17,13 @@ export class ContentService {
 
   async create(dto: CreateContentDto, image: any, userId: number) {
     const fileName = await this.fileService.createFile(image);
-    const userB = await this.userService.getOneUser(userId);
-    const content = await this.contentRepository.create({
-      user: userB,
+    const user = await this.userService.getOneUser(userId);
+    const photo = await this.contentRepository.create({
       image: fileName,
       description: dto.description,
+      user: user,
     });
-    await this.contentRepository.save(content);
-    return { image: content.image };
+    await this.contentRepository.save(photo);
+    return { image: photo.image };
   }
 }

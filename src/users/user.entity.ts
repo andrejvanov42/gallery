@@ -1,6 +1,12 @@
 import { ContentEntity } from 'src/content/content.entity';
 import { UserRoleEntity } from 'src/roles/user-roles.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity('users')
 export class UserEntity {
@@ -20,5 +26,6 @@ export class UserEntity {
   userRoles: UserRoleEntity[];
 
   @OneToMany(() => ContentEntity, (content: ContentEntity) => content.image)
+  @JoinColumn()
   content: ContentEntity[];
 }
