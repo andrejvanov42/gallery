@@ -1,3 +1,4 @@
+import { ContentEntity } from 'src/content/content.entity';
 import { UserRoleEntity } from 'src/roles/user-roles.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
@@ -17,4 +18,7 @@ export class UserEntity {
 
   @OneToMany(() => UserRoleEntity, (userRole: UserRoleEntity) => userRole.user)
   userRoles: UserRoleEntity[];
+
+  @OneToMany(() => ContentEntity, (content: ContentEntity) => content.image)
+  content: ContentEntity[];
 }
