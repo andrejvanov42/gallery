@@ -22,7 +22,7 @@ import { FilesModule } from './files/files.module';
         password: configService.get<string>('TYPEORM_PASSWORD'),
         database: configService.get<string>('TYPEORM_DATABASE'),
         entities: [__dirname + '/dist/**/*.entity{.ts,.js}'],
-        synchronize: false,
+        synchronize: true,
         autoLoadEntities: true,
         logging: true,
       }),
